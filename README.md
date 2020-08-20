@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Small notes
+
+I have spend more time then extected because:
+
+1. I have faced with CORS regarding [meteweatche.com/api](meteweatche.com/api), and I will need to find a solution as fast as I can.
+2. I have faced with problem, when I put a relative link to image src attribute, and the API needs some headers in this case, so I need to get this image as blob and put the blob to image src
+3. I have deployed test application to Heroku but it seems that Heroku need some time to create a server for the App, so if you will not have an access to deployed App on Heroku please use local version of the App.
+You can find Test app Heroku Link in the end of this document.
+
 ## Available Scripts
 
 In the project directory, you can run:
