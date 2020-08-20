@@ -6,15 +6,20 @@ import {
   GET_WEATHER_REQUEST,
   GET_WEATHER_SUCCESS,
   GET_WEATHER_ERROR,
+  CHANGE_CURRENT_TEMP,
 } from "../constants";
-import { getWeatgerByWoeid, getWeatherByLatLong } from "src/config/helpers";
+import {
+  getWeatgerByWoeid,
+  getWeatherByLatLong,
+  getImage,
+} from "../../config/helpers";
 
-export const setUserLatLong = (payload) => ({
+export const setLatLong = (payload) => ({
   type: SET_USER_LATLONG,
   payload,
 });
 
-export const setUserWoeid = (woeid) => ({
+export const setWoeid = (woeid) => ({
   type: SET_USER_WOEID,
   woeid,
 });
@@ -29,20 +34,28 @@ export const setCurrentDegrees = (degrees) => ({
   degrees,
 });
 
+export const changeCurrentTemp = (temp) => ({
+  type: CHANGE_CURRENT_TEMP,
+  temp,
+});
+
 export const getCurrentWeather = ({ coords }) => async (dispatch) => {
   dispatch({ type: GET_WEATHER_REQUEST });
 
-  const weatherWithLatLong = getWeatherByLatLong(coords);
-  if (weatherWithLatLong) {
-    const firstLocationId = weatherWithLatLong[0].woeid;
-    const weatherWithWoeid = getWeatgerByWoeid(firstLocationId);
-    const consolidatedWeather = weatherWithWoeid["consolidated_weather"];
-    const currentDegress = consolidatedWeather["the_temp"];
-    const weatherAbbr = consolidatedWeather["weather_state_abbr"];
-    dispatch(setCurrentDegrees(currentDegress));
-    dispatch(setCurrentWeatcherAbbr(weatherAbbr));
-  }
   try {
+    const weatherWithLatLong = await getWeatherByLatLong(coords);
+    if (weatherWithLatLong) {
+      const firstLocationId = weatherWithLatLong[0].woeid;
+      const weatherWithWoeid = await getWeatgerByWoeid(firstLocationId);
+      const consolidatedWeather = weatherWithWoeid["consolidated_weather"][0];
+      const currentDegress = consolidatedWeather["the_temp"];
+      const weatherAbbr = consolidatedWeather["weather_state_abbr"];
+      const image = await getImage(weatherAbbr);
+      dispatch(setCurrentDegrees(currentDegress));
+      dispatch(setCurrentWeatcherAbbr(image));
+      dispatch(setWoeid(firstLocationId));
+      dispatch(setLatLong(coords));
+    }
     dispatch({ type: GET_WEATHER_SUCCESS });
   } catch (e) {
     dispatch({ type: GET_WEATHER_ERROR });

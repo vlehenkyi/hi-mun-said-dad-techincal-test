@@ -6,15 +6,17 @@ import {
   GET_WEATHER_ERROR,
   GET_WEATHER_REQUEST,
   GET_WEATHER_SUCCESS,
+  CHANGE_CURRENT_TEMP,
 } from "../constants";
 
 const initialState = {
   lattitude: null,
   longitude: null,
   woeid: null, //woeid - Where on Eartch ID
-  currentWeatcherIconAbbr: "", //current weather abbriviation for getting icon,
-  isLoading: null,
+  iconSrc: "", //current weather abbriviation for getting icon,
+  isLoading: true,
   error: null,
+  currentDegrees: 0,
 };
 
 export default (state = initialState, action) => {
@@ -22,8 +24,8 @@ export default (state = initialState, action) => {
     case SET_USER_LATLONG:
       return {
         ...state,
-        lattitude: action.payload.lat,
-        longtidure: action.payload.long,
+        lattitude: action.payload.latitude,
+        longitude: action.payload.longitude,
       };
     case SET_USER_WOEID:
       return {
@@ -33,7 +35,7 @@ export default (state = initialState, action) => {
     case SET_CURRENT_WEATHER_ABBR:
       return {
         ...state,
-        currentWeatcherIconAbbr: action.abbr,
+        iconSrc: action.abbr,
       };
     case SET_CURRENT_DEGREES:
       return {
@@ -55,6 +57,11 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: true,
+      };
+    case CHANGE_CURRENT_TEMP:
+      return {
+        ...state,
+        currentDegrees: action.temp,
       };
     default:
       return state;
