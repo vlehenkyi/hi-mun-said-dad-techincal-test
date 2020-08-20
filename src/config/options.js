@@ -1,6 +1,6 @@
 export default {
-  mode: "no-cors",
   headers: {
     "Content-Type": "application/json",
+    "Origin": "metaweather.com/api"
   },
 };
