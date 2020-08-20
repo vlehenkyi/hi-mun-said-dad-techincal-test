@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import PropTypes from "prop-types";
 
 export default function Icon({ src }) {
   return (
@@ -7,3 +8,7 @@ export default function Icon({ src }) {
     </Fragment>
   );
 }
+
+Icon.propTypes = {
+  src: PropTypes.string.isRequired,
+};

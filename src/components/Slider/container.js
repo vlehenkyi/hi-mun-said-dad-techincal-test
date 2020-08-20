@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Slider from "./Slider";
 import { changeCurrentTemp } from "../../store/action";
 const mapStateToProps = (state) => ({
-  currentTemp: state.currentTemp,
+  currentTemp: state.currentDegrees,
 });
 
 const mapDispatchToProps = (dispatch) => {
