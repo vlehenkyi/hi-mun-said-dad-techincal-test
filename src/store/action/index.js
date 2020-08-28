@@ -48,7 +48,7 @@ export const getCurrentWeather = ({ coords }) => async (dispatch) => {
       const firstLocationId = weatherWithLatLong[0].woeid;
       const weatherWithWoeid = await getWeatgerByWoeid(firstLocationId);
       const consolidatedWeather = weatherWithWoeid["consolidated_weather"][0];
-      const currentDegress = consolidatedWeather["the_temp"];
+      const currentDegress = Math.floor(consolidatedWeather["the_temp"]);
       const weatherAbbr = consolidatedWeather["weather_state_abbr"];
       const image = await getImage(weatherAbbr);
       dispatch(setCurrentDegrees(currentDegress));

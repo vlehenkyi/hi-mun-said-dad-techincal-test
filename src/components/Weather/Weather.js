@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Icon from "../Icon";
 import Slider from "../Slider";
+import Temperature from "../Temperature";
 import "./style.css";
 
 export default function Weather({
@@ -37,10 +38,11 @@ export default function Weather({
       {isLoading ? (
         <p>Weather is Loading please wait...</p>
       ) : (
-        <div>
+        <>
+          <Temperature />
           <Icon />
           <Slider />
-        </div>
+        </>
       )}
     </div>
   );
